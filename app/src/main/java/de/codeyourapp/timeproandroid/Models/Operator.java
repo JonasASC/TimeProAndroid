@@ -1,11 +1,10 @@
 package de.codeyourapp.timeproandroid.Models;
-import android.util.Log;
 
 import com.google.gson.annotations.Expose;
 
 import java.util.concurrent.ExecutionException;
 
-import de.codeyourapp.timeproandroid.HTTP.HTTPPost;
+import de.codeyourapp.timeproandroid.HTTP.HTTPLoginPost;
 
 public class Operator {
 
@@ -26,7 +25,7 @@ public class Operator {
     }
 
     public void sendLoginDate(String data){
-        HTTPPost http  = new HTTPPost();
+        HTTPLoginPost http  = new HTTPLoginPost();
         try {
             result = http.execute("http://jwg.zollhaus.net:8080/Hello-Servlet-0.0.1-SNAPSHOT/login",data).get();
 

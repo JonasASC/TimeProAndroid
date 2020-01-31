@@ -6,7 +6,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 public class HTTPGet extends AsyncTask<String, Void, String> {
@@ -30,12 +29,11 @@ public class HTTPGet extends AsyncTask<String, Void, String> {
             connection.setRequestMethod(REQUEST_METHOD);
             connection.setReadTimeout(READ_TIMEOUT);
             connection.setConnectTimeout(CONNECTION_TIMEOUT);
-            connection.setRequestProperty("cookie", HTTPPost.sessionCookies);
+            connection.setRequestProperty("cookie", HTTPLoginPost.sessionCookies);
             //Connect to our url
             connection.connect();
             //Create a new InputStreamReader
-            InputStreamReader streamReader = new
-                    InputStreamReader(connection.getInputStream());
+            InputStreamReader streamReader = new InputStreamReader(connection.getInputStream());
             //Create a new buffered reader and String Builder
             BufferedReader reader = new BufferedReader(streamReader);
             StringBuilder stringBuilder = new StringBuilder();
