@@ -29,7 +29,7 @@ public class HTTPGet extends AsyncTask<String, Void, String> {
             connection.setRequestMethod(REQUEST_METHOD);
             connection.setReadTimeout(READ_TIMEOUT);
             connection.setConnectTimeout(CONNECTION_TIMEOUT);
-            connection.setRequestProperty("cookie", HTTPLoginPost.sessionCookies);
+            connection.setRequestProperty("cookie", HTTPPost.sessionCookies);
             //Connect to our url
             connection.connect();
             //Create a new InputStreamReader

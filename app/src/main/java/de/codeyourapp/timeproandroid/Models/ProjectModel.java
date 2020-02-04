@@ -2,7 +2,8 @@ package de.codeyourapp.timeproandroid.Models;
 
 import com.google.gson.annotations.Expose;
 
-import de.codeyourapp.timeproandroid.HTTP.HTTPLoginPost;
+import java.util.concurrent.ExecutionException;
+
 import de.codeyourapp.timeproandroid.HTTP.HTTPPost;
 
 public class ProjectModel {
@@ -29,9 +30,9 @@ public class ProjectModel {
         this.contract = contract;
     }
 
-    public void addProject(String data){
+    public void addProject(String data) throws ExecutionException, InterruptedException {
         HTTPPost http = new HTTPPost();
-        http.execute("http://jwg.zollhaus.net:8080/Hello-Servlet-0.0.1-SNAPSHOT/addProject",data);
+        http.execute("http://jwg.zollhaus.net:8080/Hello-Servlet-0.0.1-SNAPSHOT/addProject",data).get();
     }
 
 

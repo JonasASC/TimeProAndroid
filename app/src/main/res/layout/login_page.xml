@@ -22,6 +22,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
     <EditText
         android:id="@+id/loginpw"
         android:layout_width="wrap_content"
@@ -33,6 +34,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
+        android:hint="Passwort"
         android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@+id/loginButton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,6 +53,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
+        android:hint="Benutzername/Email"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/loginpw"
         app:layout_constraintEnd_toEndOf="parent"

@@ -4,14 +4,14 @@ import com.google.gson.annotations.Expose;
 
 import java.util.concurrent.ExecutionException;
 
-import de.codeyourapp.timeproandroid.HTTP.HTTPLoginPost;
+import de.codeyourapp.timeproandroid.HTTP.HTTPPost;
 
 public class Operator {
 
     @Expose
-    private String email;
+    public String email;
     @Expose
-    private String password;
+    public String password;
     private String firstname;
     private String lastname;
     private Integer userId;
@@ -24,8 +24,8 @@ public class Operator {
         this.password = password;
     }
 
-    public void sendLoginDate(String data){
-        HTTPLoginPost http  = new HTTPLoginPost();
+    public String sendLoginDate(String data){
+        HTTPPost http  = new HTTPPost();
         try {
             result = http.execute("http://jwg.zollhaus.net:8080/Hello-Servlet-0.0.1-SNAPSHOT/login",data).get();
 
@@ -35,7 +35,9 @@ public class Operator {
             e.printStackTrace();
         }
 
+        String s = "DataSend";
 
+    return s;
     }
     public Boolean acces() {
         loggedIn = false;
