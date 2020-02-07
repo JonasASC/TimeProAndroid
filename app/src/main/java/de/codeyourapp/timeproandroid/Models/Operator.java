@@ -5,6 +5,7 @@ import com.google.gson.annotations.Expose;
 import java.util.concurrent.ExecutionException;
 
 import de.codeyourapp.timeproandroid.HTTP.HTTPPost;
+import de.codeyourapp.timeproandroid.Constante.UrlConstants;
 
 public class Operator {
 
@@ -27,7 +28,7 @@ public class Operator {
     public String sendLoginDate(String data){
         HTTPPost http  = new HTTPPost();
         try {
-            result = http.execute("http://jwg.zollhaus.net:8080/Hello-Servlet-0.0.1-SNAPSHOT/login",data).get();
+            result = http.execute(UrlConstants.loginUrl,data).get();
 
         } catch (ExecutionException e) {
             e.printStackTrace();

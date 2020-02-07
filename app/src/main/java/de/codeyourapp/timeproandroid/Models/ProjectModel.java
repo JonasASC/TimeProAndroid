@@ -5,6 +5,7 @@ import com.google.gson.annotations.Expose;
 import java.util.concurrent.ExecutionException;
 
 import de.codeyourapp.timeproandroid.HTTP.HTTPPost;
+import de.codeyourapp.timeproandroid.Constante.UrlConstants;
 
 public class ProjectModel {
 
@@ -32,7 +33,7 @@ public class ProjectModel {
 
     public void addProject(String data) throws ExecutionException, InterruptedException {
         HTTPPost http = new HTTPPost();
-        http.execute("http://jwg.zollhaus.net:8080/Hello-Servlet-0.0.1-SNAPSHOT/addProject",data).get();
+        http.execute(UrlConstants.addProjectUrl,data).get();
     }
 
 

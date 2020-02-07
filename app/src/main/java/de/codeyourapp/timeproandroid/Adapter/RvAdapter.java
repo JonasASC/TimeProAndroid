@@ -1,11 +1,14 @@
 package de.codeyourapp.timeproandroid.Adapter;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.os.strictmode.WebViewMethodCalledOnWrongThreadViolation;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -18,16 +21,18 @@ import de.codeyourapp.timeproandroid.Activitys.ProjectViewActivity;
 import de.codeyourapp.timeproandroid.HTTP.HTTPPost;
 import de.codeyourapp.timeproandroid.Models.ProjectModel;
 import de.codeyourapp.timeproandroid.R;
+import de.codeyourapp.timeproandroid.Constante.UrlConstants;
 
 
 public class RvAdapter extends RecyclerView.Adapter<RvAdapter.ViewHolder>{
     private List<ProjectModel> project;
-    OnItemListener itemListener;
+    private OnNoteListener onNoteListener;
+    private OnNoteLongListener onNoteLongListener;
 
-
-    public RvAdapter(List<ProjectModel> project, OnItemListener onItemListener){
+    public RvAdapter(List<ProjectModel> project,OnNoteListener onNoteListener, OnNoteLongListener onNoteLongListener){
         this.project = project;
-        this.itemListener = onItemListener;
+        this.onNoteListener = onNoteListener;
+        this.onNoteLongListener = onNoteLongListener;
     }
 
 
@@ -37,49 +42,14 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.ViewHolder>{
         this.notifyDataSetChanged();
     }
 
-
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener{
-
-        TextView projectName;
-        TextView projectId;
-        TextView time;
-        ImageView androidButton;
-        OnItemListener itemListener;
-        RelativeLayout relativeLayout;
-        CardView cardView;
-
-        public ViewHolder(@NonNull View itemView, OnItemListener itemListener) {
-            super(itemView);
-            cardView = itemView.findViewById(R.id.cv);
-            time = (TextView) itemView.findViewById(R.id.time);
-            projectName = (TextView) itemView.findViewById(R.id.item);
-            projectId = (TextView)itemView.findViewById(R.id.person_age);
-            this.itemListener = itemListener;
-            itemView.setOnClickListener(this);
-            relativeLayout = (RelativeLayout) itemView.findViewById(R.id.rlayout);
-            cardView.setOnCreateContextMenuListener(this);
-        }
-
-
-        @Override
-        public void onClick(View view) {
-            itemListener.onItemClick(getAdapterPosition());
-        }
-
-        @Override
-        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-            contextMenu.add(this.getAdapterPosition(),121,0,"Delete this Project");
-            contextMenu.add(this.getAdapterPosition(),122,0,"Edit");
-        }
-    }
-
     @NonNull
     @Override
     public RvAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.porject_list_look, parent, false);
-        ProjectViewActivity.getData();
-        return new ViewHolder(itemView, itemListener);
+        LoadData.getData();
+        return new ViewHolder(itemView, onNoteListener, onNoteLongListener);
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull RvAdapter.ViewHolder holder, int i) {
@@ -93,24 +63,76 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.ViewHolder>{
         }else{
             holder.relativeLayout.setBackgroundColor(Color.BLUE);
         }
+
+
+
     }
+
     @Override
     public int getItemCount()
     {
         return project.size();
     }
 
-    public interface OnItemListener{
-        void onItemClick(int position);
+
+    public  class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener , View.OnLongClickListener{
+
+        TextView projectName;
+        TextView projectId;
+        TextView time;
+        RelativeLayout relativeLayout;
+        CardView cardView;
+        OnNoteListener mOnNoteListener;
+        OnNoteLongListener mOnNoteLongListener;
+
+
+        public ViewHolder(@NonNull View itemView, OnNoteListener onNoteListener, OnNoteLongListener onNoteLongListener) {
+            super(itemView);
+            cardView = itemView.findViewById(R.id.cv);
+            time = (TextView) itemView.findViewById(R.id.time);
+            projectName = (TextView) itemView.findViewById(R.id.item);
+            projectId = (TextView)itemView.findViewById(R.id.person_age);
+            relativeLayout = (RelativeLayout) itemView.findViewById(R.id.rlayout);
+            mOnNoteListener = onNoteListener;
+            mOnNoteLongListener = onNoteLongListener;
+            itemView.setOnLongClickListener(this);
+            itemView.setOnClickListener(this);
+
+        }
+
+
+        @Override
+        public void onClick(View view) {
+            onNoteListener.onNoteClick(getAdapterPosition());
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            onNoteLongListener.onNoteLongClick(getAdapterPosition(), view);
+
+
+            return true;
+        }
     }
+
+
+
+
 
     public void removeProject(int postion){
-
+       System.out.println("Rremouve");
        Integer id = project.get(postion).id;
        HTTPPost http = new HTTPPost();
-       http.execute("http://jwg.zollhaus.net:8080/Hello-Servlet-0.0.1-SNAPSHOT/deleteProject", id.toString());
+       http.execute(UrlConstants.removeProjectUrl, id.toString());
        System.out.println(id);
+       LoadData.refresh();
     }
 
+    public interface OnNoteListener{
+        void onNoteClick(int position);
+    }
 
+    public interface OnNoteLongListener{
+        void onNoteLongClick(int position, View view);
+    }
 }
