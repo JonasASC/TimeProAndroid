@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="5dp">
 
@@ -8,27 +11,32 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:cardBackgroundColor="@color/cardView"
+        app:cardCornerRadius="10dp"
         android:id="@+id/cv">
+
+
 
         <RelativeLayout
             android:id="@+id/rlayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="402dp"
+            android:layout_height="match_parent"
             android:padding="5dp">
 
 
             <TextView
-                android:id="@+id/item"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
+                android:id="@+id/project_name"
+                android:layout_width="397dp"
+                android:layout_height="51dp"
+                android:gravity="center"
                 android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/person_age"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/item"
+                android:layout_below="@+id/project_name"
+                android:layout_marginTop="32dp"
                 android:text="12" />
 
             <ProgressBar
@@ -36,23 +44,47 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="368dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/item"
+                android:layout_alignBottom="@id/project_name"
                 android:layout_marginLeft="8dp"
-                android:layout_marginBottom="-18dp"
+                android:layout_marginBottom="-50dp"
                 android:layout_toRightOf="@id/person_age"
                 android:paddingLeft="6dp"
-                android:progress="44"/>
+                android:progress="0" />
+
+            <ImageView
+                android:id="@+id/statusButton"
+                android:layout_width="48dp"
+                android:layout_height="45dp"
+                android:layout_alignBottom="@+id/progressBar2"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="319dp"
+                android:layout_marginLeft="319dp"
+                android:tint="@color/colorPrimary"
+                android:layout_marginBottom="10dp"
+                app:srcCompat="@drawable/ic_fiber_manual_record_black_24dp" />
 
             <TextView
                 android:id="@+id/time"
                 android:layout_width="136dp"
                 android:layout_height="21dp"
+                android:layout_alignBottom="@+id/progressBar2"
+                android:layout_marginStart="-218dp"
+                android:layout_marginLeft="-218dp"
+                android:layout_marginBottom="20dp"
+                android:layout_toEndOf="@+id/project_name"
+                android:layout_toRightOf="@+id/project_name"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="00:00"
+                android:inputType="time" />
+
+            <Chronometer
+                android:id="@+id/currentTime"
+                android:layout_width="128dp"
+                android:layout_height="wrap_content"
                 android:layout_above="@+id/progressBar2"
-                android:layout_marginStart="140dp"
-                android:layout_marginLeft="140dp"
-                android:layout_marginBottom="8dp"
-                android:layout_toEndOf="@+id/item"
-                android:layout_toRightOf="@+id/item"
+                android:layout_marginBottom="10dp"
                 android:ems="10"
                 android:inputType="time" />
 

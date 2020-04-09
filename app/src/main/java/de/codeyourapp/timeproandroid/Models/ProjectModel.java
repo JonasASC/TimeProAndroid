@@ -12,23 +12,29 @@ public class ProjectModel {
     public  String elapsed;
     @Expose
     public  String name;
+    @Expose
     public Integer id;
     @Expose
     public String description;
-    @Expose
     public String budget;
     @Expose
     public String contract;
     public Integer userid;
     public boolean active;
+    @Expose
+    public String projectTime;
+    public Double progress = 0.0;
 
 
-    public ProjectModel(String name, String description,String contract, String budget){
+    public ProjectModel(String name, String description,String contract, String projectTime){
         this.name = name;
         this.description = description;
-        this.budget = budget;
-
+        this.projectTime = projectTime;
         this.contract = contract;
+    }
+
+    public ProjectModel(Integer id){
+        this.id = id;
     }
 
     public void addProject(String data) throws ExecutionException, InterruptedException {

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/project_info_name"
+        android:layout_width="match_parent"
+        android:layout_height="114dp"
+        android:gravity="center"
+        android:text="Projekt Name"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/project_info_description"
+        android:layout_width="416dp"
+        android:layout_height="167dp"
+        android:gravity="center"
+        android:text="Projekt Beschreibung"
+        app:layout_constraintTop_toBottomOf="@+id/project_info_name"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+        android:id="@+id/project_project_info_contract"
+        android:layout_width="match_parent"
+        android:layout_height="191dp"
+        android:gravity="center"
+        android:text="Vertrag"
+        app:layout_constraintTop_toBottomOf="@+id/project_info_description"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <TextView
+        android:id="@+id/project_info_budget"
+        android:layout_width="match_parent"
+        android:layout_height="167dp"
+        android:gravity="center"
+        android:text="Budget"
+        tools:layout_editor_absoluteX="5dp"
+        tools:layout_editor_absoluteY="472dp" />
+
+    <Button
+        android:id="@+id/back_button"
+        android:layout_width="50dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="180dp"
+        android:layout_marginLeft="180dp"
+        android:background="@drawable/ic_arrow_back_black_24dp"
+        android:onClick="backToProjectView"
+        app:layout_constraintTop_toTopOf="@id/project_info_budget"
+        tools:layout_editor_absoluteY="659dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

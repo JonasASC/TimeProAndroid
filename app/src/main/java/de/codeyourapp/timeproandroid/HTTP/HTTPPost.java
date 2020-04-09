@@ -3,10 +3,12 @@ package de.codeyourapp.timeproandroid.HTTP;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.Buffer;
 
 
 public class HTTPPost extends AsyncTask<String, Void, Integer> {
@@ -30,8 +32,12 @@ public class HTTPPost extends AsyncTask<String, Void, Integer> {
                 conn.setDoOutput(true);
                 conn.setDoInput(true);
 
+
                 DataOutputStream os = new DataOutputStream(conn.getOutputStream());
                 os.writeBytes(jsonParams[1]);
+
+
+
 
                 os.flush();
                 os.close();

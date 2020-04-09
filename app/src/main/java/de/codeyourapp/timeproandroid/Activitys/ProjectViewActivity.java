@@ -1,17 +1,13 @@
 package de.codeyourapp.timeproandroid.Activitys;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -19,27 +15,23 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ExecutionException;
 
-import de.codeyourapp.timeproandroid.Adapter.LoadData;
+import de.codeyourapp.timeproandroid.Adapter.LoadDataActiveProject;
 import de.codeyourapp.timeproandroid.Adapter.RvAdapter;
-import de.codeyourapp.timeproandroid.HTTP.HTTPGet;
 import de.codeyourapp.timeproandroid.HTTP.HTTPPost;
 import de.codeyourapp.timeproandroid.Models.Operator;
 import de.codeyourapp.timeproandroid.Models.ProjectModel;
 import de.codeyourapp.timeproandroid.Models.Tracker;
 import de.codeyourapp.timeproandroid.R;
-import de.codeyourapp.timeproandroid.Constante.UrlConstants;
 
 public class ProjectViewActivity extends AppCompatActivity implements RvAdapter.OnNoteListener, RvAdapter.OnNoteLongListener, PopupMenu.OnMenuItemClickListener{
 
@@ -49,13 +41,15 @@ public class ProjectViewActivity extends AppCompatActivity implements RvAdapter.
     Gson gson = new Gson();
     int position;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
             parseLoginData();
             System.out.println("on Create with Try cookie" + HTTPPost.sessionCookies);
-            LoadData.getData();
+            LoadDataActiveProject.getData();
             setContentView(R.layout.project_list_view);
             initRecyclerView();
         }catch (Exception e){
@@ -88,11 +82,12 @@ public class ProjectViewActivity extends AppCompatActivity implements RvAdapter.
         pw = loginPassword.getText().toString();
         Operator operator = new Operator("jonas@jonas", "test");
         String json = gson.toJson(operator);
+        System.out.println("hauts mich hier raus ? ");
         operator.sendLoginDate(json);
 
         if(operator.acces() == true){
             setContentView(R.layout.project_list_view);
-            LoadData.getData();
+            LoadDataActiveProject.getData();
             initRecyclerView();
             FileOutputStream myFOS = openFileOutput("isLogedIn",MODE_PRIVATE);
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(myFOS, "UTF-8"));
@@ -105,7 +100,7 @@ public class ProjectViewActivity extends AppCompatActivity implements RvAdapter.
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new RvAdapter(LoadData.projectlist, this,this);
+        adapter = new RvAdapter(LoadDataActiveProject.projectList, this,this);
         recyclerView.setAdapter(adapter);
 
     }
@@ -116,30 +111,32 @@ public class ProjectViewActivity extends AppCompatActivity implements RvAdapter.
     public void addProject(View view) throws ExecutionException, InterruptedException {
         EditText proName = findViewById(R.id.project_name);
         EditText proDesc = findViewById(R.id.project_description);
-        EditText proBudget = findViewById(R.id.project_budget);
+        EditText time = findViewById(R.id.project_time);
         EditText proContract = findViewById(R.id.contract);
-        ProjectModel pro = new ProjectModel(proName.getText().toString(),proDesc.getText().toString(),proContract.getText().toString(),proBudget.getText().toString());
+        String proTime = time.getText().toString() + ":00:00";
+        Log.i("Time", proTime);
+        ProjectModel pro = new ProjectModel(proName.getText().toString(),proDesc.getText().toString(),proContract.getText().toString(),proTime);
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         String json = gson.toJson(pro);
         Log.i("Json",json);
         pro.addProject(json);
         setContentView(R.layout.project_list_view);
         initRecyclerView();
-        LoadData.refresh();
+        LoadDataActiveProject.refresh();
     }
 
     @Override
     public void onNoteClick(int position) {
-        System.out.println("Hier wird geklcikt "+ position);
-        Tracker tr = new Tracker(LoadData.projectlist.get(position).id,LoadData.projectlist.get(position).userid.toString());
+
+        Tracker tr = new Tracker(LoadDataActiveProject.projectList.get(position).id, LoadDataActiveProject.projectList.get(position).userid.toString());
         Gson gson = new Gson();
         String json = gson.toJson(tr);
-        if(LoadData.projectlist.get(position).active){
+        if(LoadDataActiveProject.projectList.get(position).active){
             tr.EndTs(json);
         }else{
             tr.StartTs(json);
         }
-        LoadData.refresh();
+        LoadDataActiveProject.refresh();
     }
 
     @Override
@@ -152,7 +149,6 @@ public class ProjectViewActivity extends AppCompatActivity implements RvAdapter.
         this.position = position;
     }
 
-
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
         Toast.makeText(this, "Item Clickt",Toast.LENGTH_SHORT).show();
@@ -161,11 +157,23 @@ public class ProjectViewActivity extends AppCompatActivity implements RvAdapter.
                 adapter.removeProject(position);
                 return true;
             case R.id.menu_item_edit:
-                System.out.println("Edit");
+                System.out.println("Info");
+                setContentView(R.layout.project_info);
                 return true;
             default:
                 System.out.println("default");
                 return false;
         }
     }
+
+    public void backToProjectView(View view){
+
+        setContentView(R.layout.project_list_view);
+        LoadDataActiveProject.refresh();
+        initRecyclerView();
+
+
+    }
+
+
 }
