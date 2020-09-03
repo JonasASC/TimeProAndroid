@@ -8,33 +8,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import de.codeyourapp.timeproandroid.Activitys.MainActivity;
 import de.codeyourapp.timeproandroid.Constante.UrlConstants;
+import de.codeyourapp.timeproandroid.Models.DateTime;
 import de.codeyourapp.timeproandroid.HTTP.HTTPGet;
-import de.codeyourapp.timeproandroid.Models.ProjectModel;
 
-public class LoadDataActiveProject {
-    public static List<ProjectModel> projectList;
+public class LoadDataTime {
 
-    public static void getData(){
+    public static List<DateTime> dataTimeList;
+
+    public static void getData(int projectid){
+
         String result = "";
         HTTPGet http = new HTTPGet();
         try {
-            result = http.execute(UrlConstants.getAktivProjectUrl).get();
+            result = http.execute(UrlConstants.getDataTime+projectid).get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         Gson gson = new Gson();
-        Type projectListType = new TypeToken<ArrayList<ProjectModel>>(){}.getType();
-        projectList = gson.fromJson(result, projectListType);
+        Type dataTimelistType = new TypeToken<ArrayList<DateTime>>(){}.getType();
+        dataTimeList = gson.fromJson(result, dataTimelistType);
+        System.out.println(dataTimeList);
 
-    }
-
-    public static void refresh(){
-        LoadDataActiveProject.getData();
-        MainActivity.adapter.loadWithNewData(LoadDataActiveProject.projectList);
     }
 
 }

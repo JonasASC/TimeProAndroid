@@ -1,10 +1,12 @@
 package de.codeyourapp.timeproandroid.Constante;
 
 public class UrlConstants {
-    public static String getProjectUrl = "http://triton.as-computer.biz:8080/Hello-Servlet-0.0.1-SNAPSHOT/getActivelist";
-    public static String addProjectUrl = "http://triton.as-computer.biz:8080/Hello-Servlet-0.0.1-SNAPSHOT/addProject";
-    public static String removeProjectUrl = "http://triton.as-computer.biz:8080/Hello-Servlet-0.0.1-SNAPSHOT/deleteProject";
-    public static String loginUrl = "http://triton.as-computer.biz:8080/Hello-Servlet-0.0.1-SNAPSHOT/login";
-    public static String startTsUrl = "http://triton.as-computer.biz:8080/Hello-Servlet-0.0.1-SNAPSHOT/startTs";
-    public static String endTsUrl = "http://triton.as-computer.biz:8080/Hello-Servlet-0.0.1-SNAPSHOT/endts";
+    public static String getAktivProjectUrl = "https://api.as-computer.biz/timepro/getActivelist";
+    public static String getProjektLiistUrl = "https://api.as-computer.biz/timepro/getProjectList";
+    public static String addProjectUrl = "https://api.as-computer.biz/timepro/addProject";
+    public static String removeProjectUrl = "https://api.as-computer.biz/timepro/deleteProject";
+    public static String loginUrl = "https://api.as-computer.biz/timepro/login";
+    public static String startTsUrl = "https://api.as-computer.biz/timepro/startTs";
+    public static String endTsUrl = "https://api.as-computer.biz/timepro/endts";
+    public static String getDataTime = "https://api.as-computer.biz/timepro/getTracker/";
 }

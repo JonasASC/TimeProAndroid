@@ -13,12 +13,9 @@ public class Operator {
     public String email;
     @Expose
     public String password;
-    private String firstname;
-    private String lastname;
-    private Integer userId;
     private Boolean loggedIn;
     private Integer result;
-    private String url;
+
 
     public Operator(String email, String password){
         this.email = email;

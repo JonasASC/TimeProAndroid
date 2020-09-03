@@ -8,6 +8,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import de.codeyourapp.timeproandroid.HTTP.HTTPPost;
+
 public class HTTPGet extends AsyncTask<String, Void, String> {
 
     public static final String REQUEST_METHOD = "GET";

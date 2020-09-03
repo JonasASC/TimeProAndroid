@@ -6,6 +6,7 @@ import java.util.concurrent.ExecutionException;
 
 import de.codeyourapp.timeproandroid.HTTP.HTTPPost;
 import de.codeyourapp.timeproandroid.Constante.UrlConstants;
+import de.codeyourapp.timeproandroid.HTTP.HTTPPostProject;
 
 public class ProjectModel {
 
@@ -16,7 +17,7 @@ public class ProjectModel {
     public Integer id;
     @Expose
     public String description;
-    public String budget;
+    public Integer budget;
     @Expose
     public String contract;
     public Integer userid;
@@ -31,14 +32,16 @@ public class ProjectModel {
         this.description = description;
         this.projectTime = projectTime;
         this.contract = contract;
+
     }
+
 
     public ProjectModel(Integer id){
         this.id = id;
     }
 
     public void addProject(String data) throws ExecutionException, InterruptedException {
-        HTTPPost http = new HTTPPost();
+        HTTPPostProject http = new HTTPPostProject();
         http.execute(UrlConstants.addProjectUrl,data).get();
     }
 

@@ -3,9 +3,11 @@ package de.codeyourapp.timeproandroid.HTTP;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.Buffer;
@@ -32,15 +34,11 @@ public class HTTPPost extends AsyncTask<String, Void, Integer> {
                 conn.setDoOutput(true);
                 conn.setDoInput(true);
 
+                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream(),"UTF-8"));
+                bw.write(jsonParams[1]);
 
-                DataOutputStream os = new DataOutputStream(conn.getOutputStream());
-                os.writeBytes(jsonParams[1]);
-
-
-
-
-                os.flush();
-                os.close();
+                bw.flush();
+                bw.close();
 
                 Log.i("post", jsonParams[1]);
                 Log.i("STATUS", String.valueOf(conn.getResponseCode()));
